@@ -1,9 +1,11 @@
 import os
+
+import gspread
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 
-from config.settings import GOOGLE_SECRET_FILE, GOOGLE_DRIVE_FOLDER_ID
+from config.settings import GOOGLE_SECRET_FILE, GOOGLE_DRIVE_FOLDER_ID, GOOGLE_SHEETS_ID
 
 SCOPES = [
     "https://www.googleapis.com/auth/drive",
@@ -73,3 +75,37 @@ class GoogleDiskService:
 
         print(f"{len(downloaded)} files downloaded")
         return downloaded
+
+
+class GoogleSheetsService:
+    def __init__(self):
+        creds = Credentials.from_service_account_file(
+            GOOGLE_SECRET_FILE,
+            scopes=SCOPES
+        )
+        self.client = gspread.authorize(creds)
+        self.sheet = self.client.open_by_key(GOOGLE_SHEETS_ID).sheet1
+
+    def get_all_rows(self) -> list:
+        return self.sheet.get_all_values()
+
+    def append_row(self, row: list) -> None:
+        self.sheet.append_row(row)
+
+    def update_cell(self, row: int, col: int, value) -> None:
+        self.sheet.update_cell(row, col, value)
+
+    def get_headers(self) -> list:
+        return self.sheet.row_values(1)
+
+    def delete_row(self, row_index: int) -> None:
+        self.sheet.delete_rows(row_index)
+
+    def update_row(self, row_index: int, values: list) -> None:
+        self.sheet.update(f"A{row_index}", [values])
+
+    def find_row_by_value(self, value: str, col: int = 1) -> int | None:
+        cell = self.sheet.find(value, in_column=col)
+        if cell:
+            return cell.row
+        return None
