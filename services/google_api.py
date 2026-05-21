@@ -1,11 +1,11 @@
 import os
-
 import gspread
+from google import genai
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 
-from config.settings import GOOGLE_SECRET_FILE, GOOGLE_DRIVE_FOLDER_ID, GOOGLE_SHEETS_ID
+from config.settings import GOOGLE_SECRET_FILE
 
 SCOPES = [
     "https://www.googleapis.com/auth/drive",
@@ -78,13 +78,13 @@ class GoogleDiskService:
 
 
 class GoogleSheetsService:
-    def __init__(self):
+    def __init__(self, sheet_id):
         creds = Credentials.from_service_account_file(
             GOOGLE_SECRET_FILE,
             scopes=SCOPES
         )
         self.client = gspread.authorize(creds)
-        self.sheet = self.client.open_by_key(GOOGLE_SHEETS_ID).sheet1
+        self.sheet = self.client.open_by_key(sheet_id).sheet1
 
     def get_all_rows(self) -> list:
         return self.sheet.get_all_values()
