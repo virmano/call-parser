@@ -109,3 +109,46 @@ class GoogleSheetsService:
         if cell:
             return cell.row
         return None
+
+
+class GeminiAPIService:
+    def __init__(self, api_key: str = None):
+
+        self.client = genai.Client(api_key=api_key)
+
+    def process_file_with_prompt(self, file_path: str, prompt: str, model_name: str = "gemini-2.5-flash") -> str:
+
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"File not found: {file_path}")
+
+        print(f"1. Uploading file '{file_path}' to Gemini...")
+
+        uploaded_file = self.client.files.upload(file=file_path)
+        print(f"File was uploaded successfully.")
+
+        try:
+            print(f"2. Sending request to {model_name}...")
+
+            response = self.client.models.generate_content(
+                model=model_name,
+                contents=[uploaded_file, prompt]
+            )
+
+            result_text = response.text
+            return result_text
+
+        finally:
+            print("3. Remove used file from Gemini File API...")
+            self.client.files.delete(name=uploaded_file.name)
+
+    def process_prompt(self, prompt: str, model_name: str = "gemini-2.5-flash") -> str:
+        print(f"Sending prompt to {model_name}...")
+        try:
+            response = self.client.models.generate_content(
+                model=model_name,
+                contents=prompt
+            )
+            return response.text
+        except Exception as e:
+            print(f"Error with Gemini: {e}")
+            raise
