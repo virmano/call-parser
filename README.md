@@ -58,10 +58,12 @@ A tool for automatic transcription and quality analysis of service center calls 
 ```
 
 Open `.env` and fill in your values:
+```
 GEMINI_API_KEY=your_gemini_api_key
 GOOGLE_SHEETS_ID=your_google_sheets_id
 GOOGLE_DRIVE_FOLDER_ID=your_google_drive_folder_id
 GOOGLE_SECRET_FILE=google_secret.json
+```
 
 **Where to find IDs:**
 - **Google Sheets ID**: from the URL `https://docs.google.com/spreadsheets/d/`**`THIS_IS_THE_ID`**`/edit`
@@ -173,11 +175,13 @@ sto-parser/
 ```
 
 Відкрий `.env` і заповни свої значення:
+```
 GEMINI_API_KEY=твій_ключ_gemini
 DEEPGRAM_API_KEY=твій_ключ_deepgram
 GOOGLE_SHEETS_ID=id_твоєї_таблиці
 GOOGLE_DRIVE_FOLDER_ID=id_твоєї_папки
 GOOGLE_SECRET_FILE=google_secret.json
+```
 
 **Де знайти ID:**
 - **Google Sheets ID**: з URL `https://docs.google.com/spreadsheets/d/`**`ЦЕ_І_Є_ID`**`/edit`
