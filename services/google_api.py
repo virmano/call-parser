@@ -170,7 +170,7 @@ class GeminiAPIService:
         except Exception as e:
             raise GeminiAPIError(f"Failed to initialize Gemini API service: {e}")
 
-    def process_file_with_prompt(self, file_path: str, prompt: str, model_name: str = "gemini-2.5-flash") -> str:
+    def process_file_with_prompt(self, file_path: str, prompt: str, model_name: str = "gemini-3.1-flash-lite") -> str:
         if not os.path.exists(file_path):
             raise GeminiAPIError(f"File not found: {file_path}")
 
@@ -196,7 +196,7 @@ class GeminiAPIService:
                 except Exception as e:
                     print(f"Warning: Could not delete file {uploaded_file.name}: {e}")
 
-    def process_prompt(self, prompt: str, model_name: str = "gemini-2.5-flash") -> str:
+    def process_prompt(self, prompt: str, model_name: str = "gemini-3.1-flash-lite") -> str:
         try:
             print(f"Sending prompt to {model_name}...")
             response = self.client.models.generate_content(
