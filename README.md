@@ -91,6 +91,7 @@ Your main folder (GOOGLE_DRIVE_FOLDER_ID)
 ---
 
 ## Project structure
+```
 sto-parser/
 ├── main.py                  # Entry point
 ├── prompts.py               # Prompts for Gemini
@@ -106,7 +107,7 @@ sto-parser/
 │   └── google_api.py        # Google Drive, Sheets, Gemini services
 ├── downloads/               # Downloaded mp3 files
 └── transcripts/             # Generated transcripts
-
+```
 ---
 
 ---
@@ -206,6 +207,7 @@ GOOGLE_SECRET_FILE=google_secret.json
 ---
 
 ## Структура проекту
+```
 sto-parser/
 ├── main.py                  # Точка входу
 ├── prompts.py               # Промпти для Gemini
@@ -221,3 +223,4 @@ sto-parser/
 │   └── google_api.py        # Сервіси Google Drive, Sheets, Gemini
 ├── downloads/               # Скачані mp3 файли
 └── transcripts/             # Згенеровані транскрипти
+```
